@@ -21,7 +21,7 @@ for semester_id in database.keys():
 # pprint(database)
 
 
-# extracting assessments
+# indentify assessments id
 ROOT = '../dataset/workbench/{semester_id}/{class_id}/assessments'
 for semester_id in database.keys():
     path = ROOT.replace('{semester_id}', semester_id)
@@ -35,23 +35,42 @@ for semester_id in database.keys():
 #pprint(database)
 
 
-# extracting assessment feartures
-def process_lines(assessment_file):
+# create assessment features
+ROOT = '../dataset/workbench/{semester_id}/{class_id}/assessments/'
+
+def add_features(features):
+    for semester_id in database.keys():
+        for class_id in database[semester_id].keys():
+            for assessment_id in database[semester_id][class_id].keys():
+                for feature in features:
+                    database[semester_id][class_id][assessment_id][feature] = 'NULL'
+
+def extract_features(assessment_file):
+    features = []
     for line in assessment_file:
-        
+        searched = re.search(r'(\-+\s)([\sa-z]+)(:)', line)
+        if searched:
+            feature = searched.group(2)
+            feature = re.sub(r'\s', '_', feature)
+            features.append(feature)
+            add_features(features)
+            #print(feature)
 
 def open_file(fullpath):
     with open(fullpath, 'r') as assessment_file:
-        process_lines(assessment_file)
+        extract_features(assessment_file)
         
-ROOT = '../dataset/workbench/{semester_id}/{class_id}/assessments/'
+
 for semester_id in database.keys():
     path = ROOT.replace('{semester_id}', semester_id)
     for class_id in database[semester_id].keys():
         path = path.replace('{class_id}', class_id)
         for assessment_name in os.listdir(path):
             fullpath = os.path.join(path, assessment_name)
-            #print(fullpath)
+            # print(fullpath)
             open_file(fullpath)
+            break
+        break
+    break
 
-
+pprint(database)
