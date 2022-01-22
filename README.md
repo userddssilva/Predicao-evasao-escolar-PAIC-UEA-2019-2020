@@ -6,7 +6,7 @@ Este repositório armazena os arquivos usados no meu trabalho de Iniciação Cie
 
 A partir da análise dos *logs* do sistema foi possível identificar atributos referentes aos estudantes e estruturar diferentes bases de dados, o objtivo maior nesta tarefa foi reconhecer e extrair o máximo de dados de uso da plataforma a seguir temos um diagrama da base de dados inicial.
 
-![i](images\modelagem-banco.jpg)
+![img](images/modelagem-banco.jpg)
 
 ## Notebooks
 
